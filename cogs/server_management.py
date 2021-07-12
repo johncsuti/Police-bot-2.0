@@ -30,6 +30,10 @@ class Server_Management(commands.Cog):
 #        if str(ctx.channel) == "memes" and ctx.content != "":
 #            await ctx.channel.purge(limit=1)
 #            return True
+    @commands.Cog.listener("on_message")
+    async def notalking(self, ctx):
+        if str(ctx.channel) == "memes" and ctx.content != "":
+            await ctx.channel.purge(limit=1)
 
 def setup(client):
     client.add_cog(Server_Management(client))
