@@ -1,4 +1,3 @@
-# Bot.py
 import os
 
 import discord
@@ -38,11 +37,5 @@ client.cog_list = [
 for cog in client.cog_list:
 	client.load_extension(cog)
 print(f"\nAll {len(client.cog_list)} cogs loaded!\n")
-
-#@client.event
-#async def on_message(message):
-#	if str(message.channel) == "memes" and message.content != "":
-#		await message.channel.purge(limit=1)
-#		return True
 
 client.run(TOKEN)

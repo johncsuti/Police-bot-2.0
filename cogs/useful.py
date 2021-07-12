@@ -40,19 +40,18 @@ class Useful(commands.Cog):
 
         await ctx.send(embed=help_embed)
     
-    #@help.command(name='server')
-    #async def help_server(self, ctx):
-    #    help_embed = discord.Embed(color=discord.Color.blue())
-    #    help_embed.set_author(
-    #        name="64 Stacks Police Bot",
-    #        icon_url="https://cdn.discordapp.com/avatars/738551372643041280/3c0b0df05f16ca7f426ca97aee40aba7.png")
-    #    
-    #    help_embed.add_field(name="**Commands**", value=
-    #    '**!clear** **Amount** *Removes said amout of lines from the channel.*\n'
-    #    '**!purge** **Clear all** *Removes all messages from a channel.*\n',
-    #    inline=False)
+    @help.command(name='server')
+    async def help_server(self, ctx):
+        help_embed = discord.Embed(color=discord.Color.blue())
+        help_embed.set_author(
+            name="64 Stacks Police Bot",
+            icon_url="https://cdn.discordapp.com/avatars/738551372643041280/3c0b0df05f16ca7f426ca97aee40aba7.png")
+        
+        help_embed.add_field(name="**Commands**", value=
+        '**!clear** **Amount** *Removes said amout of lines from the channel.*\n',
+        inline=False)
 
-    #    await ctx.send(embed=help_embed)
+        await ctx.send(embed=help_embed)
     
     @help.command(name='user')
     async def help_user(self, ctx):

@@ -25,11 +25,6 @@ class Server_Management(commands.Cog):
                 description='''You can't purge more then 10,000 messages at a time!\n Thanks Discord...''')
             await ctx.send(embed=limit_embed)
 
-#    @commands.listener()
-#    async def on_message(self, ctx):
-#        if str(ctx.channel) == "memes" and ctx.content != "":
-#            await ctx.channel.purge(limit=1)
-#            return True
     @commands.Cog.listener("on_message")
     async def notalking(self, ctx):
         if str(ctx.channel) == "memes" and ctx.content != "":
