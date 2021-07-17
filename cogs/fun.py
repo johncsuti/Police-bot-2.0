@@ -50,7 +50,7 @@ class Fun(commands.Cog):
 
         await ctx.send(embed=embed)
     
-    @commands.command(name= "stealskin", aliases=["ss", "skin", "mcskin"])
+    @commands.command()
     async def stealskin(self, ctx, *, gamertag: str):
         response = await self.ses.get(f"https://api.mojang.com/users/profiles/minecraft/{gamertag}")
         if response.status == 204:
