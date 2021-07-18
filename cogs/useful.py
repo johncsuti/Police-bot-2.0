@@ -27,6 +27,18 @@ class Useful(commands.Cog):
 
             await ctx.send(embed=help_embed)
 
+    @commands.command()
+    async def info(self, ctx):
+        info_embed = discord.Embed(color=discord.Color.blue())
+        info_embed.set_author(
+            name="64 Stacks Police Bot",
+            icon_url="https://cdn.discordapp.com/avatars/738551372643041280/3c0b0df05f16ca7f426ca97aee40aba7.png")
+        info_embed.add_field(name="**Server Info**", value=
+            '**Server IP:** *Play.64Stacks.com*\n'
+            '**Version:** *1.8-1.16*\n',
+            inline=False)
+        await ctx.send(embed=info_embed)
+
     @help.command(name='useful')
     async def help_useful(self, ctx):
         help_embed = discord.Embed(color=discord.Color.blue())
