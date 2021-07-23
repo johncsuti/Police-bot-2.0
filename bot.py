@@ -8,7 +8,7 @@ from itertools import cycle
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
-client = commands.Bot(command_prefix='#')
+client = commands.Bot(command_prefix='%')
 client.remove_command('help')
 
 @client.event
@@ -21,9 +21,9 @@ async def on_command_error(ctx, error):
 	if isinstance(error, commands.CommandNotFound):
 		await ctx.send(f'Invalid command used perhaps take a look at: ''!help''?')
 
-status = cycle(['Play.64Stacks.com', 'Minecraft: Java Edition'])
+status = cycle(['Play.64Stacks.com', 'Minecraft: Java Edition', 'Minecraft: Secret Edition'])
 
-@tasks.loop(seconds=0, minutes=1, hours=0, count=None, reconnect=True, loop=None)
+@tasks.loop(seconds=45, minutes=0, hours=0, count=None, reconnect=True, loop=None)
 async def change_status():
 	await client.change_presence(activity=discord.Game(next(status)))
 

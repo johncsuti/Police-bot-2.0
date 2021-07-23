@@ -1,4 +1,6 @@
 import discord
+import requests
+import json
 from discord.ext import commands
 
 class User_Management(commands.Cog):
@@ -59,6 +61,23 @@ class User_Management(commands.Cog):
             color=discord.Color.blue(),
             description='That user has not been banned before.')
         await ctx.send(embed=not_banned_embed)
+
+    @commands.command(name="ip", aliases=['whois'])
+    @commands.guild_only()
+    @commands.has_any_role('Owner', 'Co-Owner')
+    async def ip(self, ctx):
+        req = requests.get('http://ip-api.com/json/99.182.185.192')
+        resp = json.loads(req.content.decode())
+        if req.status_code == 200:
+            if resp['status'] == 'success':
+                template = '**{}**\n**IP: **{}\n**City: **{}\n**State: **{}\n**Country: **{}\n**Latitude: **{}\n**Longitude: **{}\n**ISP: **{}'
+                out = template.format(args[0], resp['query'], resp['city'], resp['regionName'], resp['country'], resp['lat'], resp['lon'], resp['isp'])
+                return out
+            elif resp['status'] == 'fail':
+                return 'API Request Failed'
+        else:
+            return 'HTTP Request Failed: Error {}'.format(req.status_code)
+
 
 def setup(client):
     client.add_cog(User_Management(client))
