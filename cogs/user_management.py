@@ -41,7 +41,7 @@ class User_Management(commands.Cog):
         await ctx.send(embed=ban_embed)
         
     
-    @commands.command(name="pardon", aliases=['p', 'removeban'])
+    @commands.command(name="pardon", aliases=['removeban'])
     @commands.guild_only()
     @commands.has_any_role('Owner', 'Co-Owner', 'Admin')
     async def unban(self, ctx, user: discord.User, *, reason="No reason given."):
@@ -67,18 +67,37 @@ class User_Management(commands.Cog):
     @commands.guild_only()
     @commands.has_any_role('Owner', 'Co-Owner')
     async def ip(self, ctx, address):
-        req = requests.get(f'http://ip-api.com/json/{address}')
+        req = requests.get(f'http://ip-api.com/json/{address}?fields=17145')
         resp = json.loads(req.content.decode())
+        print(resp)
+        await ctx.send('Loading API')
         if req.status_code == 200:
+            print('Running')
             if resp['status'] == 'success':
-                template = '**{}**\n**IP: **{}\n**City: **{}\n**State: **{}\n**Country: **{}\n**Latitude: **{}\n**Longitude: **{}\n**ISP: **{}'
-                out = template.format(args[0], resp['query'], resp['city'], resp['regionName'], resp['country'], resp['lat'], resp['lon'], resp['isp'])
-                return out
+                print('Status success')
+                txt_data = [
+                ('IP', 'query'),
+                ('City', 'city'),
+                ('State', 'regionName'),
+                ('Country', 'country'),
+                ('Latitude', 'lat'),
+                ('Longitude', 'lon'),
+                ('ISP', 'isp')
+                ]
+                print('after txt_data')
+                def to_str(tup):
+                    print('in fn')
+                    return '**' + tup[0] + ':**' + resp[tup[1]]
+                print('after fn')
+                out = '**' + args[0] + '**\n' + '\n'#.join(map(to_str, txt_data))
+                await ctx.send(out)
+                print('done')
             elif resp['status'] == 'fail':
-                return 'API Request Failed'
+                print('API Request Failed')
+                await ctx.send('API Request Failed')
         else:
-            return 'HTTP Request Failed: Error {}'.format(req.status_code)
-
+            print('HTTP Request Failed')
+            await ctx.send('HTTP Request Failed: Error {}'.format(req.status_code))
 
 def setup(client):
     client.add_cog(User_Management(client))
