@@ -1,6 +1,7 @@
 import discord
 import requests
 import json
+import traceback
 from discord.ext import commands
 
 class User_Management(commands.Cog):
@@ -46,7 +47,7 @@ class User_Management(commands.Cog):
     @commands.has_any_role('Owner', 'Co-Owner', 'Admin')
     async def unban(self, ctx, user: discord.User, *, reason="No reason given."):
         if ctx.author.id == user.id:
-            await ctx.send(embed=dicord.Embed(color=discord.Color.blue(), description='You can not pardon yourself\nReally?'))
+            await ctx.send(embed=discord.Embed(color=discord.Color.blue(), description='You can not pardon yourself\nReally?'))
             return
         for entry in await ctx.guild.bans():
             if entry[1].id == user.id:
@@ -67,34 +68,29 @@ class User_Management(commands.Cog):
     @commands.guild_only()
     @commands.has_any_role('Owner', 'Co-Owner')
     async def ip(self, ctx, address):
-        req = requests.get(f'http://ip-api.com/json/{address}?fields=17145')
+        req = requests.get(f'http://ip-api.com/json/{address}?fields=25337')
         resp = json.loads(req.content.decode())
-        print(resp)
         await ctx.send('Loading API')
         if req.status_code == 200:
-            print('Running')
             if resp['status'] == 'success':
-                print('Status success')
                 txt_data = [
                 ('IP', 'query'),
                 ('City', 'city'),
                 ('State', 'regionName'),
+                ('ZIP', 'zip'),
                 ('Country', 'country'),
                 ('Latitude', 'lat'),
                 ('Longitude', 'lon'),
                 ('ISP', 'isp')
                 ]
-                print('after txt_data')
-                def to_str(tup):
-                    print('in fn')
-                    return '**' + tup[0] + ':**' + resp[tup[1]]
-                print('after fn')
-                out = '**' + args[0] + '**\n' + '\n'#.join(map(to_str, txt_data))
-                await ctx.send(out)
-                print('done')
+ 
+                ip_embed = discord.Embed(title=f"Whois data for {address}", color=discord.Color.blue())
+                for txt, key in txt_data:
+                    ip_embed.add_field(name=txt, value=resp.get(key, 'Unknown'), inline=False)
+                await ctx.send(embed=ip_embed)
+
             elif resp['status'] == 'fail':
-                print('API Request Failed')
-                await ctx.send('API Request Failed')
+                await ctx.send('Status: Fail')
         else:
             print('HTTP Request Failed')
             await ctx.send('HTTP Request Failed: Error {}'.format(req.status_code))
