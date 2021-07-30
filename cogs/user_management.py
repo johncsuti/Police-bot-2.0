@@ -62,6 +62,9 @@ class User_Management(commands.Cog):
             description='That user has not been banned before.')
         await ctx.send(embed=not_banned_embed)
 
+
+#Test in progress work for me you cunt bag https is not required but it may force https when connecting.
+#I need to investigate more...?
     @commands.command(name="ip", aliases=['whois'])
     @commands.guild_only()
     @commands.has_any_role('Owner', 'Co-Owner')
