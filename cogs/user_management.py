@@ -63,13 +63,11 @@ class User_Management(commands.Cog):
         await ctx.send(embed=not_banned_embed)
 
 
-#Test in progress work for me you cunt bag https is not required but it may force https when connecting.
-#I need to investigate more...?
     @commands.command(name="ip", aliases=['whois'])
     @commands.guild_only()
     @commands.has_any_role('Owner', 'Co-Owner')
-    async def ip(self, ctx):
-        req = requests.get('http://ip-api.com/json/99.182.185.192')
+    async def ip(self, ctx, address):
+        req = requests.get(f'http://ip-api.com/json/{address}')
         resp = json.loads(req.content.decode())
         if req.status_code == 200:
             if resp['status'] == 'success':
