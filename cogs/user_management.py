@@ -1,7 +1,6 @@
 import discord
 import requests
 import json
-import traceback
 from discord.ext import commands
 
 class User_Management(commands.Cog):
@@ -70,7 +69,7 @@ class User_Management(commands.Cog):
     async def ip(self, ctx, address):
         req = requests.get(f'http://ip-api.com/json/{address}?fields=25337')
         resp = json.loads(req.content.decode())
-        await ctx.send('Loading API')
+
         if req.status_code == 200:
             if resp['status'] == 'success':
                 txt_data = [
@@ -91,6 +90,7 @@ class User_Management(commands.Cog):
 
             elif resp['status'] == 'fail':
                 await ctx.send('Status: Fail')
+
         else:
             print('HTTP Request Failed')
             await ctx.send('HTTP Request Failed: Error {}'.format(req.status_code))
