@@ -75,8 +75,8 @@ class Useful(commands.Cog):
         help_embed.add_field(name="**Commands**", value=
         '**!kick** **@mention** **Reason** *Kickes said user for said reason*\n'
         '**!ban** **@mention** **Reason** *Bans said user for said reason*\n'
-        '**!unban** **username#1234** *Unbans said user.*\n',
-        '**!ip** **IP Address/Domian Name** *Displays location data for an IP/Website.*\n',
+        '**!unban** **username#1234** *Unbans said user.*\n'
+        '**!ip** **IP Address/Domian Name** *Displays location data for an IP/Website.*\n'
         '**!whois** **@mention** *Displays useful user info.*\n',
         inline=False)
 
