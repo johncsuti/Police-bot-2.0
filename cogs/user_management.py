@@ -63,9 +63,8 @@ class User_Management(commands.Cog):
         await ctx.send(embed=not_banned_embed)
 
 
-    @commands.command(name="ip", aliases=['whois'])
+    @commands.command(name="ip")
     @commands.guild_only()
-    @commands.has_any_role('Owner', 'Co-Owner')
     async def ip(self, ctx, address):
         req = requests.get(f'http://ip-api.com/json/{address}?fields=25337')
         resp = json.loads(req.content.decode())
@@ -94,6 +93,27 @@ class User_Management(commands.Cog):
         else:
             print('HTTP Request Failed')
             await ctx.send('HTTP Request Failed: Error {}'.format(req.status_code))
+
+    @commands.command(name="whois")
+    @commands.guild_only()
+    async def whois(self, ctx, member: discord.Member = None):
+        if not member:  # if member is no mentioned
+            member = ctx.message.author  # set member as the author
+        roles = [role for role in member.roles]
+        embed = discord.Embed(colour=discord.Colour.blue(), timestamp=ctx.message.created_at,
+            title=f"User Info - {member}")
+        embed.set_thumbnail(url=member.avatar_url)
+        embed.set_footer(text=f"Requested by {ctx.author}")
+
+        embed.add_field(name="ID:", value=member.id)
+        embed.add_field(name="Display Name:", value=member.display_name)
+
+        embed.add_field(name="Created Account On:", value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
+        embed.add_field(name="Joined Server On:", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
+
+        embed.add_field(name="Roles:", value="".join([role.mention for role in roles]))
+        embed.add_field(name="Highest Role:", value=member.top_role.mention)
+        await ctx.send(embed=embed)
 
 def setup(client):
     client.add_cog(User_Management(client))

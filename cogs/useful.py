@@ -19,7 +19,7 @@ class Useful(commands.Cog):
                 icon_url="https://cdn.discordapp.com/avatars/738551372643041280/3c0b0df05f16ca7f426ca97aee40aba7.png")
             
             help_embed.add_field(name="Useful", value="``!help useful``", inline=True)
-            #help_embed.add_field(name="Server Management", value="``!help server``", inline=True)
+            help_embed.add_field(name="Server Management", value="``!help server``", inline=True)
             help_embed.add_field(name="User Management", value="``!help user``", inline=True)
             help_embed.add_field(name="Fun Commands", value="``!help fun``", inline=True)
 
@@ -76,6 +76,8 @@ class Useful(commands.Cog):
         '**!kick** **@mention** **Reason** *Kickes said user for said reason*\n'
         '**!ban** **@mention** **Reason** *Bans said user for said reason*\n'
         '**!unban** **username#1234** *Unbans said user.*\n',
+        '**!ip** **IP Address/Domian Name** *Displays location data for an IP/Website.*\n',
+        '**!whois** **@mention** *Displays useful user info.*\n',
         inline=False)
 
         await ctx.send(embed=help_embed)
