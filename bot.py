@@ -8,7 +8,7 @@ from itertools import cycle
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
-client = commands.Bot(command_prefix='%')
+client = commands.Bot(command_prefix='!')
 client.remove_command('help')
 
 @client.event
